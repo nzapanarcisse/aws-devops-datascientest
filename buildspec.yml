@@ -47,7 +47,7 @@ phases:
           if $(echo "$OLD_IMAGE_TAG < $IMAGE_TAG" |bc -l);
             then
               echo Tag looks to be ok ...
-              push_release    
+             # push_release    
           else
             echo "newTag must be greater than previous tag, so nothing to do"
           fi 
