@@ -43,7 +43,8 @@ phases:
           OLD_IMAGE_TAG=$(grep -r "newTag" /root/kustomization.yaml | cut -f2 -d'"')
           apt-get update && apt-get install -y bc
           echo $OLD_IMAGE_TAG et $IMAGE_TAG
-          if (( $(echo "$OLD_IMAGE_TAG < $IMAGE_TAG" |bc -l) ));
+          echo "$OLD_IMAGE_TAG < $IMAGE_TAG" | bc -l
+          if (( $(echo "$OLD_IMAGE_TAG < $IMAGE_TAG" |bc -l) == 1 ));
             then
               echo Tag looks to be ok ...
               push_release    
