@@ -14,14 +14,15 @@ phases:
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - docker run --name $IMAGE_REPO_NAME -d -p 80:5000 -e PORT=5000 $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - |
-        if $(curl http://localhost | grep -q "Hello world!");
+        response=$(curl -s http://localhost)
+        echo Response $response
+        if echo "$response" | grep -q "Hello world!"; 
           then
-            echo image seems to be working normally
+            echo Image seems to be working normally
         else
-          echo $(curl http://localhost | grep -q "Hello world!")
           echo image is not working as expected
           echo we delete the image to ensure that the image will not be pushed
-          # docker rmi $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+          docker rmi $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
         fi
       - docker rm -f $IMAGE_REPO_NAME
   post_build:
