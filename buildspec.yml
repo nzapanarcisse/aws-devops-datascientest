@@ -44,7 +44,7 @@ phases:
           apt-get update && apt-get install -y bc
           echo $OLD_IMAGE_TAG et $IMAGE_TAG
           echo "$OLD_IMAGE_TAG < $IMAGE_TAG" | bc -l
-          if $(echo "$OLD_IMAGE_TAG < $IMAGE_TAG" |bc -l);
+          if [ "$(echo "$OLD_IMAGE_TAG < $IMAGE_TAG" | bc)" -eq 1 ];
             then
               echo Tag looks to be ok ...
              # push_release    
