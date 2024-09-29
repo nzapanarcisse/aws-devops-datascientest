@@ -42,6 +42,7 @@ phases:
         if [ -f "/root/kustomization.yaml" ]; then
           OLD_IMAGE_TAG=$(grep -r "newTag" /root/kustomization.yaml | cut -f2 -d'"')
           apt-get update && apt-get install -y bc
+          echo $OLD_IMAGE_TAG et $IMAGE_TAG
           if (( $(echo "$OLD_IMAGE_TAG < $IMAGE_TAG" |bc -l) ));
             then
               echo Tag looks to be ok ...
