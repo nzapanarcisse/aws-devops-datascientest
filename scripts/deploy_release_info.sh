@@ -8,4 +8,4 @@ python3 get-pip.py
 pip3 install git-remote-codecommit
 rm -Rf alpinehelloworld || echo "folder already deleted"
 rm -Rf /root/deployment || echo "folder already deleted"
-git clone codecommit::us-east-1://alpinehelloworld
+git clone https://github.com/nzapanarcisse/aws-devops-datascientest.git ./alpinehelloworld
