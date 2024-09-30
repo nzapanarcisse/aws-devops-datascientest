@@ -1,4 +1,4 @@
-Commandes liées à la vidéo **lab-7 – création du bucket relase du code de deploiement**
+**création du bucket relase du code de deploiement**
 
     ```bash
     # Création du bucket S3
@@ -8,7 +8,7 @@ Commandes liées à la vidéo **lab-7 – création du bucket relase du code de 
     aws s3api put-bucket-versioning --bucket deployment-code-release-eks --versioning-configuration Status=Enabled --region us-east-1
     ```
 
-Commandes liées à la vidéo **lab-7 – installation codedeploy agent**
+**linstallation codedeploy agent**
 
 ```bash
 # Mise à jour de la VM Bastion
@@ -22,7 +22,7 @@ sudo ./install auto
 sudo service codedeploy-agent status
 ```
 
-Commandes liées à la vidéo **lab-7 – création du docker-secret pour ecr**
+**création du docker-secret pour ecr**
 
 ```bash
 kubectl create secret docker-registry alpinehelloworld-ecr --docker-server=909394135851.dkr.ecr.us-east-1.amazonaws.com --docker-username=AWS --docker-password=$(aws ecr get-login-password --region us-east-1)
