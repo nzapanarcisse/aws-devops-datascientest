@@ -9,3 +9,4 @@ namespace=$(grep -r "namespace" /root/deployment/kustomization.yaml | cut -f2 -d
 kubectl create namespace $namespace --dry-run=client -o yaml | kubectl apply -f -
 kubectl apply --validate=true --dry-run=client --kustomize=/root/deployment/
 kubectl apply --kustomize=/root/deployment/
+sleep 20
