@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Metadata:
   License: Apache-2.0
-Description: 'This Cloudformation is used by eazytraining to deploy EKS on AWS Educate platform.
+Description: 'This Cloudformation is used by Narcisse to deploy EKS on AWS Educate platform.
               WARNING : You need to use key-pair name aws-eks to make it work, otherwise you need to change ParameterKey=EKSKeyPair,ParameterValue="aws-eks" in the userdata section
               To use k8s, you need to set kubernetes credentials, so you need to run the following command 
               only when cluster EKS is up and ready (aws cloudformation describe-stacks --region us-east-1 --stack-name EKS --query "Stacks[*].StackStatus" --output text)
