@@ -25,7 +25,7 @@ phases:
         else
           echo image is not working as expected
           echo we delete the image to ensure that the image will not be pushed
-       #   docker rmi $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+   #       docker rmi $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
         fi
       - docker rm -f $IMAGE_REPO_NAME
   post_build:
