@@ -31,7 +31,6 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - IMAGE_TAG=$(grep -r "newTag" kustomization.yaml | cut -f2 -d'"')
       - |
         push_release () {
           echo Pushing the Docker image...
