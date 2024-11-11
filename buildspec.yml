@@ -25,7 +25,7 @@ phases:
         else
           echo image is not working as expected
           echo we delete the image to ensure that the image will not be pushed
-  
+          docker rmi $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
         fi
       - docker rm -f $IMAGE_REPO_NAME
   post_build:
@@ -44,16 +44,27 @@ phases:
           git push codebuild $IMAGE_TAG 
           cp kustomization.yaml /root/kustomization.yaml 
         }
-        OLD_IMAGE_TAG=$(grep -r "newTag" /root/kustomization.yaml | cut -f2 -d'"')
-        apt-get update && apt-get install -y bc
-        echo $OLD_IMAGE_TAG et $IMAGE_TAG
-        echo "$OLD_IMAGE_TAG < $IMAGE_TAG" | bc -l
-        push_release  
-         
+        if [ -f "/root/kustomization.yaml" ]; then
+          OLD_IMAGE_TAG=$(grep -r "newTag" /root/kustomization.yaml | cut -f2 -d'"')
+          apt-get update && apt-get install -y bc
+          echo $OLD_IMAGE_TAG et $IMAGE_TAG
+          echo "$OLD_IMAGE_TAG < $IMAGE_TAG" | bc -l
+          if [ "$(echo "$OLD_IMAGE_TAG < $IMAGE_TAG" | bc)" -eq 1 ];
+            then
+              echo Tag looks to be ok ...
+              push_release    
+          else
+            echo "newTag must be greater than previous tag, so nothing to do"
+          fi 
+        else
+          echo "so it's your first build ? let's go ..."
+          push_release
+        fi
 
 #      - echo Build started on `date`
 #      - RUN=$(aws deploy push --application-name $APPLICATION_NAME --s3-location s3://${S3_NAME}/${APPLICATION_NAME}.zip --ignore-hidden-files --region us-east-1 | sed -n 2p  | sed 's/<//g' | sed 's/>//g' | sed 's/ deployment-group-name/ alpinehelloworld/g' | sed 's/ deployment-config-name/ CodeDeployDefault.AllAtOnce/g' | sed 's/ description/ deployment/g')
 #      - $RUN
-cache:
-  paths:
-    - '/root/kustomization.yaml'
+
+# cache:
+#   paths:
+#     - '/root/kustomization.yaml'
