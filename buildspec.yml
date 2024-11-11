@@ -42,22 +42,7 @@ phases:
           git remote add codebuild $REMOTE
           git tag $IMAGE_TAG
           git push codebuild $IMAGE_TAG 
-          cp kustomization.yaml /root/kustomization.yaml 
         }
-        if [ -f "/root/kustomization.yaml" ]; then
-          OLD_IMAGE_TAG=$(grep -r "newTag" /root/kustomization.yaml | cut -f2 -d'"')
-          apt-get update && apt-get install -y bc
-          echo $OLD_IMAGE_TAG et $IMAGE_TAG
-          echo "$OLD_IMAGE_TAG < $IMAGE_TAG" | bc -l
-          if [ "$(echo "$OLD_IMAGE_TAG < $IMAGE_TAG" | bc)" -eq 1 ];
-            then
-              echo Tag looks to be ok ...
-              push_release    
-          else
-            echo "newTag must be greater than previous tag, so nothing to do"
-          fi 
-        else
-          echo "so it's your first build ? let's go ..."
           push_release
         fi
 
@@ -65,6 +50,3 @@ phases:
 #      - RUN=$(aws deploy push --application-name $APPLICATION_NAME --s3-location s3://${S3_NAME}/${APPLICATION_NAME}.zip --ignore-hidden-files --region us-east-1 | sed -n 2p  | sed 's/<//g' | sed 's/>//g' | sed 's/ deployment-group-name/ alpinehelloworld/g' | sed 's/ deployment-config-name/ CodeDeployDefault.AllAtOnce/g' | sed 's/ description/ deployment/g')
 #      - $RUN
 
-# cache:
-#   paths:
-#     - '/root/kustomization.yaml'
