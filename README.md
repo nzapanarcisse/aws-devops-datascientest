@@ -33,17 +33,24 @@ Pour créer l'infrastructure, nous allons lancer une instance EC2. À partir de 
 ### Provisionnement de l'instance Bastion-eks
 1. **Lancement de l'instance :**  
    Démarrer une instance EC2 qui servira de point d’accès (bastion) pour gérer le cluster Kubernetes.
+   
 ![image](https://github.com/user-attachments/assets/0f93b074-8dca-482c-99fe-17f77ee52a37)
 ![image](https://github.com/user-attachments/assets/de5a341b-cef7-42e3-a8b5-a381d15d069a)
 ![image](https://github.com/user-attachments/assets/3de64602-12e5-47bc-8f79-31d19fa5104c)
 ![image](https://github.com/user-attachments/assets/eac39e57-40c2-4b0c-80b8-7042d09593c0)
 ![image](https://github.com/user-attachments/assets/5961ef24-f658-4f7f-afa8-6efd74ba99fc)
+
+
+
 Configurer un groupe de sécurité pour contrôler l'accès à l'instance bastion, en autorisant uniquement le trafic nécessaire (par exemple, SSH).
+
 ![image](https://github.com/user-attachments/assets/ed445044-2cb1-4289-8d0e-a00a7b964dc0)
 ![image](https://github.com/user-attachments/assets/381646dd-69d1-43b9-830b-b68a1443ed54)
 
+
 4. **Création d'un rôle IAM :**  
    Créer un rôle IAM qui permettra à l'instance bastion d'accéder aux ressources AWS, notamment pour interagir avec le cluster Kubernetes. rechercher le service IAM et Roles
+   
    ![image](https://github.com/user-attachments/assets/2c596423-a231-4ec7-972f-14fef9f0337c)
 ![image](https://github.com/user-attachments/assets/675de433-1cb6-4851-b197-7fc38da5af11)
 ![image](https://github.com/user-attachments/assets/afbc6453-e3c1-478c-a4a5-87dfbeb32ea1)
@@ -67,6 +74,7 @@ rechercher le role et modifier pour ajouter
 
 
 Maintenant, nous allons attacher notre rôle créé à l'instance bastion. Pour cela, depuis le menu des services EC2, recherchez l'instance bastion, puis allez dans Actions et sélectionnez sécurité, modifier le role IAM.
+
 ![image](https://github.com/user-attachments/assets/90080385-b1dd-475d-9674-5632d450aa97)
 ![image](https://github.com/user-attachments/assets/661a3cb9-3c24-4543-b575-aca6d856cf76)
 
@@ -76,7 +84,9 @@ Maintenant, nous allons attacher notre rôle créé à l'instance bastion. Pour 
 6. **Connexion au bastion et installation des outils :**  
    Se connecter à l'instance bastion via SSH et installer les outils nécessaires, tels que AWS CLI et kubectl, puis lancer le script CloudFormation.
 Depuis le service EC2, sélectionnez l'instance bastion, utilisez EC2 Instance Connect pour établir la connexion.
+
    ![image](https://github.com/user-attachments/assets/48e5bb69-df5e-4987-a3bb-0e47549e2819)
+   
 ![image](https://github.com/user-attachments/assets/d96a0a9a-9f18-4282-9ac9-ba591e08664c)
 
 
@@ -133,6 +143,16 @@ aws cloudformation create-stack --stack-name EKS \
            ParameterKey=EKSKeyPair,ParameterValue="aws-eks" \
            --capabilities CAPABILITY_NAMED_IAM
 ```
+Verification progression script cloudformation
+```bash
+aws cloudformation describe-stacks --region us-east-1 --stack-name EKS --query "Stacks[*].StackStatus" --output text
+```
+**sortie**
+![image](https://github.com/user-attachments/assets/fa62318a-0503-43ca-9c62-417dcaea8c7b)
+
+
+**découverte du cluster**
+
 ## 2. CodeBuild
 Configurer AWS CodeBuild pour automatiser la construction des images Docker à partir des applications. Cela inclut la définition d'un projet CodeBuild qui récupérera le code source et construira les images.
 
