@@ -48,7 +48,7 @@ Configurer un groupe de sécurité pour contrôler l'accès à l'instance bastio
 ![image](https://github.com/user-attachments/assets/381646dd-69d1-43b9-830b-b68a1443ed54)
 
 
-4. **Création d'un rôle IAM :**  
+4. **Création d'un rôle IAM :**
    Créer un rôle IAM qui permettra à l'instance bastion d'accéder aux ressources AWS, notamment pour interagir avec le cluster Kubernetes. rechercher le service IAM et Roles
    
    ![image](https://github.com/user-attachments/assets/2c596423-a231-4ec7-972f-14fef9f0337c)
@@ -96,6 +96,7 @@ Depuis le service EC2, sélectionnez l'instance bastion, utilisez EC2 Instance C
 Utiliser le script CloudFormation pour provisionner le cluster Kubernetes sur AWS. Ce processus inclut la création de la VPC, des sous-réseaux, des groupes de sécurité, et du rôle IAM pour l'EKS.
 
 ***Install aws cli**
+
 Cette commande télécharge le package d'installation d'AWS CLI, l'extrait et l'installe sur l'instance.
 
 ```bash
@@ -104,7 +105,8 @@ Cette commande télécharge le package d'installation d'AWS CLI, l'extrait et l'
           unzip awscliv2.zip
           ./aws/install
 ```
-***Install aws-iam-authenticator**   
+***Install aws-iam-authenticator** 
+
 Cette commande télécharge l'authentificateur IAM pour EKS, lui donne les permissions d'exécution et le déplace vers /usr/bin pour un accès global.
 
 ```bash
@@ -119,6 +121,7 @@ chmod +x kubectl
 sudo mv kubectl /usr/local/bin
 ``` 
 ***Install kubectl auto-completion***
+
 Ces commandes installent le support de l'auto-complétion pour kubectl, améliorant ainsi l'expérience de ligne de commande.
 ```bash
 yum install -y bash-completion
@@ -126,12 +129,14 @@ echo 'source <(kubectl completion bash)' >>~/.bashrc
 kubectl completion bash >> /etc/bash_completion.d/kubectl
 ``` 
 ***Set aws-cli region***
+
 Cette commande crée un répertoire de configuration pour AWS CLI et définit la région par défaut sur us-east-1.
 ```bash
 mkdir ~/.aws
 echo -e "[default] \nregion = us-east-1" > ~/.aws/config
 ```
 ***Deploy eks stack***
+
 Ces commandes téléchargent le fichier de modèle CloudFormation pour EKS et créent la stack en spécifiant les paramètres requis, notamment les zones de disponibilité et le nom de la clé SSH.
 
 ```bash
@@ -143,15 +148,36 @@ aws cloudformation create-stack --stack-name EKS \
            ParameterKey=EKSKeyPair,ParameterValue="aws-eks" \
            --capabilities CAPABILITY_NAMED_IAM
 ```
+```bash
+aws eks --region us-east-1 update-kubeconfig --name EKS
+```
 Verification progression script cloudformation
 ```bash
 aws cloudformation describe-stacks --region us-east-1 --stack-name EKS --query "Stacks[*].StackStatus" --output text
 ```
 **sortie**
 ![image](https://github.com/user-attachments/assets/fa62318a-0503-43ca-9c62-417dcaea8c7b)
+après quelque minutes 
+![image](https://github.com/user-attachments/assets/b8444a3d-9f3a-46a8-91b0-57ad98e7e4d9)
 
 
 **découverte du cluster**
+
+Dans le service EKS, nous pouvons observer notre cluster en cours d'exécution. Vous pouvez également voir les nœuds depuis le service EC2 d'AWS. La commande kubectl get nodes exécutée depuis l'instance bastion nous permet également d'afficher les nœuds du cluster.
+
+![image](https://github.com/user-attachments/assets/761af2eb-2d3f-4d34-bc53-b081cbf63b8e)
+```bash
+kubectl get nodes
+```
+![image](https://github.com/user-attachments/assets/ef08bde8-20f1-494d-97b6-4af92196f4fd)
+depuis le service EC2 
+
+![image](https://github.com/user-attachments/assets/0a163a56-d346-41c8-8b0d-a3cd58b0bce6)
+
+Bravo !!! 🎉
+
+Bravo !!! 🎉
+Bravo !!! 🎉 
 
 ## 2. CodeBuild
 Configurer AWS CodeBuild pour automatiser la construction des images Docker à partir des applications. Cela inclut la définition d'un projet CodeBuild qui récupérera le code source et construira les images.
