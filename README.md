@@ -82,53 +82,57 @@ Depuis le service EC2, sélectionnez l'instance bastion, utilisez EC2 Instance C
 
 
 ### Provisionnement du Cluster
+
 Utiliser le script CloudFormation pour provisionner le cluster Kubernetes sur AWS. Ce processus inclut la création de la VPC, des sous-réseaux, des groupes de sécurité, et du rôle IAM pour l'EKS.
-       ***Install aws cli**
-       Cette commande télécharge le package d'installation d'AWS CLI, l'extrait et l'installe sur l'instance.
-    ```bash
+
+***Install aws cli**
+Cette commande télécharge le package d'installation d'AWS CLI, l'extrait et l'installe sur l'instance.
+
+```bash
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           yum install -y unzip
           unzip awscliv2.zip
           ./aws/install
-     ```
-       ***Install aws-iam-authenticator**   
-       Cette commande télécharge l'authentificateur IAM pour EKS, lui donne les permissions d'exécution et le déplace vers /usr/bin pour un accès global.
-     ```bash
-          curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.9/2020-11-02/bin/linux/amd64/aws-iam-authenticator
-          chmod +x aws-iam-authenticator
-          mv aws-iam-authenticator /usr/bin/
-     ```
-        ***Install kubectl**  
-     	```bash
-          # Install kubectl
-          curl -LO "https://dl.k8s.io/release/v1.29.7/bin/linux/amd64/kubectl"
-          chmod +x kubectl
-          sudo mv kubectl /usr/local/bin
-        ``` 
-        ***Install kubectl auto-completion***
-	Ces commandes installent le support de l'auto-complétion pour kubectl, améliorant ainsi l'expérience de ligne de commande.
-	```bash
-          yum install -y bash-completion
-          echo 'source <(kubectl completion bash)' >>~/.bashrc
-          kubectl completion bash >> /etc/bash_completion.d/kubectl
-         ``` 
-        ***Set aws-cli region***
-	Cette commande crée un répertoire de configuration pour AWS CLI et définit la région par défaut sur us-east-1.
-	```bash
-          mkdir ~/.aws
-          echo -e "[default] \nregion = us-east-1" > ~/.aws/config
-          ```
-         ***Deploy eks stack***
-	 Ces commandes téléchargent le fichier de modèle CloudFormation pour EKS et créent la stack en spécifiant les paramètres requis, notamment les zones de disponibilité et le nom de la clé SSH.
-	```bash
-           curl -o eks.yaml https://raw.githubusercontent.com/nzapanarcisse/cursus-devops-stack/refs/heads/master/stack/eks-cloudformation.yaml
-           aws cloudformation create-stack --stack-name EKS \
+```
+***Install aws-iam-authenticator**   
+Cette commande télécharge l'authentificateur IAM pour EKS, lui donne les permissions d'exécution et le déplace vers /usr/bin pour un accès global.
+
+```bash
+curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.9/2020-11-02/bin/linux/amd64/aws-iam-authenticator
+chmod +x aws-iam-authenticator
+mv aws-iam-authenticator /usr/bin/
+```
+***Install kubectl**  
+```bash
+curl -LO "https://dl.k8s.io/release/v1.29.7/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin
+``` 
+***Install kubectl auto-completion***
+Ces commandes installent le support de l'auto-complétion pour kubectl, améliorant ainsi l'expérience de ligne de commande.
+```bash
+yum install -y bash-completion
+echo 'source <(kubectl completion bash)' >>~/.bashrc
+kubectl completion bash >> /etc/bash_completion.d/kubectl
+``` 
+***Set aws-cli region***
+Cette commande crée un répertoire de configuration pour AWS CLI et définit la région par défaut sur us-east-1.
+```bash
+mkdir ~/.aws
+echo -e "[default] \nregion = us-east-1" > ~/.aws/config
+```
+***Deploy eks stack***
+Ces commandes téléchargent le fichier de modèle CloudFormation pour EKS et créent la stack en spécifiant les paramètres requis, notamment les zones de disponibilité et le nom de la clé SSH.
+
+```bash
+curl -o eks.yaml https://raw.githubusercontent.com/nzapanarcisse/cursus-devops-stack/refs/heads/master/stack/eks-cloudformation.yaml
+aws cloudformation create-stack --stack-name EKS \
            --template-body file://eks.yaml \
            --parameters ParameterKey=AvailabilityZonePublicSubnet01,ParameterValue="us-east-1a" \
            ParameterKey=AvailabilityZonePublicSubnet02,ParameterValue="us-east-1b" \
            ParameterKey=EKSKeyPair,ParameterValue="aws-eks" \
            --capabilities CAPABILITY_NAMED_IAM
-	```
+```
 ## 2. CodeBuild
 Configurer AWS CodeBuild pour automatiser la construction des images Docker à partir des applications. Cela inclut la définition d'un projet CodeBuild qui récupérera le code source et construira les images.
 
