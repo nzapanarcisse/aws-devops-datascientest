@@ -50,7 +50,22 @@ Configurer un groupe de sécurité pour contrôler l'accès à l'instance bastio
 
 4. **Création d'un rôle IAM :**
    Créer un rôle IAM qui permettra à l'instance bastion d'accéder aux ressources AWS, notamment pour interagir avec le cluster Kubernetes. rechercher le service IAM et Roles
-   
+```bash
+    {
+	"Version": "2012-10-17",
+	"Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "ec2.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+
+	
+}
+```
    ![image](https://github.com/user-attachments/assets/2c596423-a231-4ec7-972f-14fef9f0337c)
 ![image](https://github.com/user-attachments/assets/675de433-1cb6-4851-b197-7fc38da5af11)
 ![image](https://github.com/user-attachments/assets/afbc6453-e3c1-478c-a4a5-87dfbeb32ea1)
