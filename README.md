@@ -76,17 +76,17 @@ Configurer un groupe de sécurité pour contrôler l'accès à l'instance bastio
 ![image](https://github.com/user-attachments/assets/3d31e021-9991-4967-8c7f-9b52a2ff79bd)
 ![image](https://github.com/user-attachments/assets/5fc8bfc8-319a-4aa5-a331-fa3942eace9b)
 
-rechercher le role et modifier pour ajouter 
-{
-	"Statement": [
+rechercher le role et modifier pour ajouter (en allant dans attacher policy puis policy en ligne)
+
+```bash
+"Statement": [
 		{
 			"Action": "*",
 			"Resource": "*",
 			"Effect": "Allow"
 		}
 	]
-}
-
+```
 
 Maintenant, nous allons attacher notre rôle créé à l'instance bastion. Pour cela, depuis le menu des services EC2, recherchez l'instance bastion, puis allez dans Actions et sélectionnez sécurité, modifier le role IAM.
 
