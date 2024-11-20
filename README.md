@@ -70,11 +70,10 @@ Configurer un groupe de sécurité pour contrôler l'accès à l'instance bastio
 ![image](https://github.com/user-attachments/assets/675de433-1cb6-4851-b197-7fc38da5af11)
 ![image](https://github.com/user-attachments/assets/afbc6453-e3c1-478c-a4a5-87dfbeb32ea1)
 ![image](https://github.com/user-attachments/assets/7a6c80af-de49-458a-a6fa-b1f089c66fb6)
-![image](https://github.com/user-attachments/assets/fe04c697-9d06-4971-aa07-735fca7abaa4)
-![image](https://github.com/user-attachments/assets/0c4ba6e9-c7c8-4b7c-a214-e9ddafc67655)
-![image](https://github.com/user-attachments/assets/8c319658-a8b3-4631-bcc0-964f26f975d8)
-![image](https://github.com/user-attachments/assets/3d31e021-9991-4967-8c7f-9b52a2ff79bd)
-![image](https://github.com/user-attachments/assets/5fc8bfc8-319a-4aa5-a331-fa3942eace9b)
+
+<img width="947" alt="image" src="https://github.com/user-attachments/assets/7d37aaf1-8f7d-42b7-8e4b-046b7e6d2a72">
+<img width="956" alt="image" src="https://github.com/user-attachments/assets/565b2490-a7fa-4f42-8d72-ca0b8d0d2f0c">
+<img width="945" alt="image" src="https://github.com/user-attachments/assets/cbcbd203-ba8f-4a67-9fbf-590c93084bbf">
 
 rechercher le role et modifier pour ajouter (en allant dans attacher policy puis policy en ligne)
 
