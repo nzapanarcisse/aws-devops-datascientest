@@ -18,6 +18,7 @@ spec:
       containers:
       - name: alpinehelloworld
         image: 688567275492.dkr.ecr.us-east-1.amazonaws.com/alpinehelloworld:1.0
+        imagePullPolicy: Always
         ports:
           - containerPort: 5000
         env:
