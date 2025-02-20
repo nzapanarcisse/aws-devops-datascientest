@@ -21,7 +21,7 @@ phases:
       - |
         response=$(curl -s http://localhost)
         echo Response $response
-        if echo "$response" | grep -q "Proven-FR!"; 
+        if echo "$response" | grep -q "Proven-FR"; 
           then
             echo Image seems to be working normally
         else
