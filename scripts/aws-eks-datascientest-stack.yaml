@@ -92,7 +92,7 @@ Resources:
           # Install aws-iam-authenticator
           curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.9/2020-11-02/bin/linux/amd64/aws-iam-authenticator
           chmod +x aws-iam-authenticator
-          mv aws-iam-authenticator /usr/bin/
+          sudo mv aws-iam-authenticator /usr/bin/
           
           # Install kubectl
           curl -LO "https://dl.k8s.io/release/v1.29.7/bin/linux/amd64/kubectl"
@@ -100,9 +100,9 @@ Resources:
           sudo mv kubectl /usr/local/bin
           
           # Install kubectl auto-completion
-          yum install -y bash-completion
-          echo 'source <(kubectl completion bash)' >>~/.bashrc
-          kubectl completion bash >> /etc/bash_completion.d/kubectl
+          #yum install -y bash-completion
+          #echo 'source <(kubectl completion bash)' >>~/.bashrc
+          #sudo kubectl completion bash >> sudo /etc/bash_completion.d/kubectl
           
           # Set aws-cli region
           mkdir ~/.aws
