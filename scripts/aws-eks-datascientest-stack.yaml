@@ -87,7 +87,7 @@ Resources:
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           yum install -y unzip
           unzip awscliv2.zip
-          ./aws/install
+          sudo ./aws/install
           
           # Install aws-iam-authenticator
           curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.9/2020-11-02/bin/linux/amd64/aws-iam-authenticator
