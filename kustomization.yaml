@@ -6,4 +6,4 @@ resources:
 namespace: default
 images:
   - name: 688567275492.dkr.ecr.us-east-1.amazonaws.com/alpinehelloworld
-    newTag: "9.0"
+    newTag: "4.0"
